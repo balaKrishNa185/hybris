@@ -1,0 +1,8 @@
+  INSERT_UPDATE ServiceLayerJob;code[unique=true];springId
+                              ;isNewCustomerJob;isNewCustomerJob
+
+  INSERT_UPDATE NewCustomerCronJob;code[unique=true];job(code);noOfDaysToConsider;sessionLanguage(isocode)
+                                   ;newCustomerCronJob;isNewCustomerJob;5;en
+
+  INSERT_UPDATE Trigger;cronjob(code)[unique=true];active;cronExpression
+                       ;newCustomerCronJob;true;0 10 11 * * ?

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/eventtrackingwsaddon" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/merchandisingaddon" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smarteditaddon" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/textfieldconfiguratortemplateaddon" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ysapproductconfigaddon" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="ext" level="project" />
+    <orderEntry type="library" name="lib34" level="project" />
+    <orderEntry type="library" name="lib43" level="project" />
+    <orderEntry type="library" name="lib16" level="project" />
+    <orderEntry type="library" name="cms2server" level="project" />
+    <orderEntry type="library" name="lib12" level="project" />
+    <orderEntry type="library" name="lib20" level="project" />
+    <orderEntry type="library" name="bin2" level="project" />
+    <orderEntry type="library" name="wiremock-standalone-2.23.2" level="project" />
+    <orderEntry type="library" name="lib40" level="project" />
+    <orderEntry type="library" name="lib26" level="project" />
+    <orderEntry type="library" name="impexserver" level="project" />
+    <orderEntry type="library" name="basecommerceserver" level="project" />
+    <orderEntry type="library" name="lib11" level="project" />
+    <orderEntry type="library" name="lib58" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.10.31" level="project" />
+    <orderEntry type="library" name="lib22" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.10.3" level="project" />
+    <orderEntry type="library" name="lib48" level="project" />
+    <orderEntry type="library" name="lib57" level="project" />
+    <orderEntry type="library" name="coreserver" level="project" />
+    <orderEntry type="library" name="lib23" level="project" />
+    <orderEntry type="library" name="lib1" level="project" />
+    <orderEntry type="module" module-name="impex" />
+    <orderEntry type="module" module-name="commonwebsrc1" />
+    <orderEntry type="module" module-name="commercefacades" />
+    <orderEntry type="module" module-name="sapproductconfigservices" />
+    <orderEntry type="module" module-name="smarteditaddon" />
+    <orderEntry type="module" module-name="sapproductconfigfacades" />
+    <orderEntry type="module" module-name="commonwebsrc3" />
+    <orderEntry type="module" module-name="acceleratorservices" />
+    <orderEntry type="module" module-name="merchandisingaddon" />
+    <orderEntry type="module" module-name="addonsrc" />
+    <orderEntry type="module" module-name="merchandisingsmartedit" />
+    <orderEntry type="module" module-name="textfieldconfiguratortemplatefacades" />
+    <orderEntry type="module" module-name="commonwebsrc2" />
+    <orderEntry type="module" module-name="ysapproductconfigaddon" />
+    <orderEntry type="module" module-name="commonwebsrc4" />
+    <orderEntry type="module" module-name="acceleratorfacades" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="commerceservices" />
+    <orderEntry type="module" module-name="cms2" />
+    <orderEntry type="module" module-name="sapproductconfigruntimeinterface" />
+    <orderEntry type="module" module-name="apiregistryservices" />
+    <orderEntry type="module" module-name="commonwebsrc" />
+    <orderEntry type="module" module-name="merchandisingcmswebservices" />
+    <orderEntry type="module" module-name="platformservices" />
+    <orderEntry type="module" module-name="merchandisingservices" />
+    <orderEntry type="module" module-name="bootstrap" />
+    <orderEntry type="module" module-name="acceleratoraddon17" />
+    <orderEntry type="module" module-name="acceleratorstorefrontcommons" />
+    <orderEntry type="module" module-name="cmsfacades" />
+    <orderEntry type="module" module-name="commonweb" />
+    <orderEntry type="module" module-name="acceleratoraddon31" />
+  </component>
+</module>

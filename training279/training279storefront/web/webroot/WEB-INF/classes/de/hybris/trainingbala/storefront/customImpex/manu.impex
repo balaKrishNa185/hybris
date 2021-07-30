@@ -1,0 +1,42 @@
+$contentCatalog=electronicsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=online])[default=$contentCatalog:Online]
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];frontendTemplateName;active[default=true]
+                          ;;ManuPageTemplate;Manu Page Template;custom/manuCMSpage;
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='ManuPageTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;;logo
+;HeaderLinks;;;headerLinks
+;SearchBox;;;searchbox
+;MiniCart;;;minicart
+;NavigationBar;;;navigation
+;footer;;;footer
+;TopHeaderSlot;;;wide
+;BottomHeaderSlot;;;wide
+;PlaceholderContentSlot;;;
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;siteLogoSlot;Default Site Logo Slot;true;SiteLogoComponent
+;;HeaderLinksSlot;Header Links;true;ContactInfo
+;;SearchBoxSlot;Search Box;true;LangCurrencyComponent
+;;MiniCartSlot;Mini Cart;true;MiniCart
+;;NavigationBarSlot;Navigation Bar;true
+;;FooterSlot;Footer;true;FooterComponent
+;;TopHeaderSlot;Top Header;true;
+;;BottomHeaderSlot;Bottom Header;true
+;;PlaceholderContentSlot;Placeholder for Addon tag files;true
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='ManuPageTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-ManuPage;SiteLogo;;SiteLogoSlot;true
+;;HeaderLinks-ManuPage;HeaderLinks;;HeaderLinksSlot;true
+;;SearchBox-ManuPage;SearchBox;;SearchBoxSlot;true
+;;MiniCart-ManuPage;MiniCart;;MiniCartSlot;true
+;;NavigationBar-ManuPage;NavigationBar;;NavigationBarSlot;true
+;;Footer-ManuPage;Footer;;FooterSlot;true
+;;TopHeaderSlot-ManuPage;TopHeaderSlot;;TopHeaderSlot;true
+;;BottomHeaderSlot-ManuPage;BottomHeaderSlot;;BottomHeaderSlot;true
+;;PlaceholderContentSlot-ManuPage;PlaceholderContentSlot;;PlaceholderContentSlot;true
+
+INSERT_UPDATEContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='true']
+;;manupage;ManuPage;ManuPageTemplate;manupage
+

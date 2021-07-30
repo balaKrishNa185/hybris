@@ -1,0 +1,11 @@
+
+<html>
+<head>
+    <body bgcolor="blue"/>
+
+          hi, ${ctx.displayName},
+              <div>
+                 Dear,${ctx.displayName} you are ordered the product ${ctx.code}  & price of the product is ${ctx.price}
+              </div>
+</head>
+</html>

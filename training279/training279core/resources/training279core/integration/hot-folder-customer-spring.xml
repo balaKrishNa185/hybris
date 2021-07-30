@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:file="http://www.springframework.org/schema/integration/file"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration
+		http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <bean id="baseDirectoryCustomer" class="java.lang.String">
+        <constructor-arg value="#{baseDirectory}/${tenantId}/customer"/>
+    </bean>
+
+    <!-- 1) Scan for files -->
+    <file:inbound-channel-adapter id="batchFilesCustomer" directory="#{baseDirectoryCustomer}"
+                                  filename-regex="^(.*)-(\d+)\.csv" comparator="fileOrderComparator">
+        <int:poller fixed-rate="1000" />
+    </file:inbound-channel-adapter>
+
+    <!-- 2) move the file to processing and setup header -->
+    <file:outbound-gateway request-channel="batchFilesCustomer" reply-channel="batchFilesCustomerProc"
+                           directory="#{baseDirectoryCustomer}/processing" delete-source-files="true" />
+    <int:service-activator input-channel="batchFilesCustomerProc" output-channel="batchFilesHeaderInit"
+                           ref="customerHeaderSetupTask" method="execute" />
+    <bean id="customerHeaderSetupTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+        <property name="catalog" value="electronicsProductCatalog" />
+        <property name="net" value="false" />
+        <property name="storeBaseDirectory" ref="baseDirectoryCustomer" />
+    </bean>
+    <bean id="batchSequenceIdParsercustom" class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+        <property name="parser">
+            <bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+                <property name="regex" value="-(\d+)\.csv" />
+            </bean>
+        </property>
+    </bean>
+    <bean id="batchLanguageParsercustom" class="de.hybris.platform.acceleratorservices.util.RegexParser">
+        <property name="regex" value="-(\w{2})-(\d+)\.csv" />
+    </bean>
+
+    <!-- Transformer converters mappings -->
+
+    <bean id="batchCustomerConverterMappingcustom"
+          class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+          p:mapping="customers"
+          p:converter-ref="batchCustomerConvertercustom"/>
+
+
+    <bean id="batchCustomerConverterRemoveMapping"
+          class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+          p:mapping="customers"
+          p:converter-ref="batchRemoveCustomConverter"/>
+
+
+    <!-- specific converters -->
+    <bean id="batchCustomerConvertercustom" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+        <property name="header">
+            <value>#{defaultImpexProductHeader}
+                $setName=name[cellDecorator=de.hybris.platform.acceleratorservices.dataimport.batch.decorator.CustomerNameDecorator]
+                $setUid=uid[cellDecorator=de.hybris.trainingbala.core.decorator.CustomerUidDecorator]
+                INSERT_UPDATE Customer;$setUid[unique=true];$setName;title(code);sessionCurrency(isocode);delete[translator=de.hybris.trainingbala.core.translator.CustomerRemoveTranslator]
+            </value>
+        </property>
+        <property name="impexRow">
+            <value>;{+0};{1};{2};{3};{4}</value>
+        </property>
+    </bean>
+
+    <bean id="batchRemoveCustomConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+        <property name="header">
+            <value>#{defaultImpexProductHeader}
+                # Remove Customer
+               REMOVE Customer;uid[unique=true];delete</value>
+        </property>
+        <property name="impexRow">
+            <value>;{+0};{4}</value>
+        </property>
+
+        <property name="rowFilter">
+            <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+                <property name="expression" value="row[4]=='1'"/>
+            </bean>
+        </property>
+    </bean>
+
+
+</beans>

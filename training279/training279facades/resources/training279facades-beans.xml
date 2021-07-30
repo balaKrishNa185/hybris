@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="genders" type="java.util.List&lt;de.hybris.trainingbala.facades.product.data.GenderData>"/>
+		<property name="manufacturerDetails" type="java.util.Collection&lt;de.hybris.trainingbala.facades.product.data.ManufacturerDetailsData>"/>
+		<property name="isNewProduct" type="Boolean"/>
+	</bean>
+
+	<bean class="de.hybris.trainingbala.facades.product.data.GenderData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="indexedManufacturerName" type="java.util.List&lt;String>"/>
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="isCount" type="Integer"/>
+		<property name="isTest" type="String"/>
+	</bean>
+
+
+	<bean class="de.hybris.trainingbala.facades.product.data.ManufacturerDetailsData">
+		<property name="id" type="Integer"/>
+		<property name="name" type="String"/>
+		<property name="country" type="String"/>
+	</bean>
+
+	  <enum class="de.hybris.platform.commercefacades.product.ProductOption">
+	      <value>ManufacturerDetails</value>
+	  </enum>
+
+	<bean class="de.hybris.trainingbala.facades.product.data.ProductionCompanyData">
+		<property name="id" type="Integer"/>
+		<property name="name" type="String"/>
+		<property name="country" type="String"/>
+	</bean>
+
+
+	<bean class="de.hybris.trainingbala.facades.product.data.CustomersData">
+		<property name="customerCreated" type="java.util.Date"/>
+		<property name="name" type="String"/>
+		<property name="phone" type="Long"/>
+		<property name="newCustomer" type="java.lang.Boolean"/>
+	</bean>
+
+
+	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData">
+		<property name="isNewCustomer" type="Boolean"/>
+		<property name="isNew" type="Boolean"/>
+		<property name="isNewBusinessUser" type="Boolean"/>
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.user.data.RegisterData">
+		<property name="isNewBusinessUser" type="boolean"/>
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.user.data.AddressData">
+		<property name="VATNumber" type="String"/>
+	</bean>
+
+</beans>

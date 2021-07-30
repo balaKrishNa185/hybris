@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testclasses><Webservices><testclass>org.training.jalo.WebservicesTest</testclass><testclass>org.training.service.impl.DefaultWebservicesServiceIntegrationTest</testclass></Webservices></testclasses>

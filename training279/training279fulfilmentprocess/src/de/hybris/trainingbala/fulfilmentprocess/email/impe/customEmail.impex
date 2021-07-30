@@ -1,0 +1,55 @@
+$contentCatalog=electronicsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$wideContent=CMSImageComponent,BannerComponent,SimpleBannerComponent,CMSLinkComponent,CMSParagraphComponent
+# Language
+$lang=en
+
+
+# Import config properties into impex macros for modulegen
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms-$config-jarResourceCmsValue
+$emailPackageName-$config-emailContextPackageName
+$emailResource=$config-emailResourceValue
+
+
+
+
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+;;CustomEmailTemplate;Custom Confirmation Email Template;true;customConfirmationEmail;custom_Email_Subject;custom_Email_Body;EmailPage
+
+
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;custom_Email_Subject;$emailPackageName.CustomNotificationEmailContext
+;custom_Email_Body;$emailPackageName.CustomNotificationEmailContext
+
+
+
+# CMS components and Email velocity templates
+UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;custom_Email_Subject;"custom Email Subject";$emailResource/email-customConfirmationSubject.vm
+;custom_Email_Body;"custom Email Body";$emailResource/email-customConfirmationBody.vm
+
+
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
+;;CustomConfirmationEmail;Custom Confirmation Email;CustomEmailTemplate;true;
+
+UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];fromEmail[lang=$lang];fromName[lang=$lang]
+                ;;CustomConfirmationEmail;"b5d7a5d7a9-17ba6b@inbox.mailtrap.io";"BALA"
+
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='CustomEmailTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;$wideContent;email
+;TopContent;;$wideContent;email
+;BottomContent;;$wideContent;email
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='CustomEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-customEmail;SiteLogo;;EmailSiteLogoSlot;true
+;;TopContent-customEmail;TopContent;;ForgottenPasswordEmailTopSlot;true
+;;BottomContent-customEmail;BottomContent;;EmailBottomSlot;true
+
+
+
+
+
